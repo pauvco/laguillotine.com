@@ -1,19 +1,27 @@
 <script>
+window.onload = function(){
+//bourreau();
+}
 
+var decapite=false;
 function bourreau(){
+if (decapite)
+{
+	$('mouton').style.top="21px"
+	$('condamne').style.top="92px"
 
-var myFx = new Fx.Tween('mouton', {property: 'top',transition: Fx.Transitions.Quint.easeIn, duration:250});
-myFx.start(21,115).chain(
-	function(){
-		$("condamne").set('tween', {transition: Fx.Transitions.Bounce.easeOut, duration:500});
-		$('condamne').tween('top', 220);
-	}
-);
-
-
-//$("mouton").set('tween', {transition: Fx.Transitions.Quint.easeIn, duration:250});
-//$('mouton').tween('top', 120).chain(function(){alert('')})
-// Fx.Transitions.Bounce.easeOut
+	decapite=false;
+}
+else 
+{
+	var myFx = new Fx.Tween('mouton', {property: 'top',transition: Fx.Transitions.Quint.easeIn, duration:250});
+	myFx.start(21,115).chain(
+		function(){
+			$("condamne").set('tween', {transition: Fx.Transitions.Bounce.easeOut, duration:500});
+			$('condamne').tween('top', 220);
+		}
+	);
+	
 }
 
 </script>
