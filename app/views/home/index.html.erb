@@ -1,6 +1,18 @@
 <script>
 window.onload = function(){
-//bourreau();
+
+  var width = 0;
+  if( typeof( window.innerWidth ) == 'number' ) {
+    width = window.innerWidth;
+  } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
+    width = document.documentElement.clientWidth;
+  }
+
+
+  var left = (width-450)/2;
+  $('laguillotine').style.left=left+"px";
+  $('decapiter').style.left=left+"px";
+
 }
 
 var decapite=false;
