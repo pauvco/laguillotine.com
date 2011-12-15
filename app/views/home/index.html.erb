@@ -5,25 +5,25 @@ window.onload = function(){
 
 var decapite=false;
 function bourreau(){
-if (decapite)
-{
-	$('mouton').style.top="21px"
-	$('condamne').style.top="92px"
+	if (decapite)
+	{
+		$('mouton').style.top="21px"
+		$('condamne').style.top="92px"
 
-	decapite=false;
+		decapite=false;
+	}
+	else 
+	{
+		var myFx = new Fx.Tween('mouton', {property: 'top',transition: Fx.Transitions.Quint.easeIn, duration:250});
+		myFx.start(21,115).chain(
+			function(){
+				$("condamne").set('tween', {transition: Fx.Transitions.Bounce.easeOut, duration:500});
+				$('condamne').tween('top', 220);
+			}
+		);
+		decapite=true;	
+	}
 }
-else 
-{
-	var myFx = new Fx.Tween('mouton', {property: 'top',transition: Fx.Transitions.Quint.easeIn, duration:250});
-	myFx.start(21,115).chain(
-		function(){
-			$("condamne").set('tween', {transition: Fx.Transitions.Bounce.easeOut, duration:500});
-			$('condamne').tween('top', 220);
-		}
-	);
-	decapite=true;	
-}
-
 </script>
 
 <button id="decapiter" onclick="bourreau()">DECAPITER</button>
