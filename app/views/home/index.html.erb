@@ -1,3 +1,5 @@
+<div id="guillotineHolder"></div>
+
 <script>
 
 
@@ -14,7 +16,7 @@
 
 
 // Creates canvas 450 × 156 at 10, 50
-var paper = Raphael(10, 50, 1450, 1156);
+var paper = Raphael('guillotineHolder', 450, 256);
 var URW = paper.getFont("URWGothicL-Book")
 
 var guillotine = paper.set(
@@ -82,7 +84,7 @@ function ready(){
 <button onclick="bourreau()">DECAPITER</button>
 
 
-<div id="holder"></div>
+
 
 
 
