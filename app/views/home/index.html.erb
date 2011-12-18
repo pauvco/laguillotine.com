@@ -1,6 +1,9 @@
 <script>
 
 
+
+
+
   var width = 0;
   if( typeof( window.innerWidth ) == 'number' ) {
     width = window.innerWidth;
@@ -14,52 +17,45 @@
 var paper = Raphael(10, 50, 1450, 1156);
 var URW = paper.getFont("URWGothicL-Book")
 
-
-
 var guillotine = paper.set(
 	paper.rect(5, 5, 5, 135).attr({stroke: "none", fill: "#000"}),
 	paper.rect(22, 5, 5, 135).attr({stroke: "none", fill: "#000"}),
-	paper.rect(3, 0, 26, 5).attr({stroke: "none", fill: "#000"})
+	paper.rect(3, 0, 26, 5).attr({stroke: "none", fill: "#000"}),
+	paper.rect(15, 5, 1, 135).attr({stroke: "none", fill: "#999"})
 );
 guillotine.transform("t200,5...");
 
-
-
-
 var mouton = paper.set(
-            paper.path("m 0.00371684,70.750591 -0.003999998,-41.75 20.000000158,0 20,0 0,9.46085 0,9.46086 -18.14872,29.28914 C 11.869207,93.320471 2.8708868,107.85059 1.8547368,109.50059 0.03957684,112.44801 0.00712684,111.76886 0.00345684,70.750591 z m -0.003999998,-56.75 0,-13.99999960019 20.000000158,0 20,0 0,13.99999960019 0,14 -20,0 -20.000000158,0 0,-14 z").attr({fill: "#000"}),
+	paper.rect(16, -135, 7, 500).attr({stroke: "none", fill: "#fff"}),
+        paper.path("m 0.00371684,70.750591 -0.003999998,-41.75 20.000000158,0 20,0 0,9.46085 0,9.46086 -18.14872,29.28914 C 11.869207,93.320471 2.8708868,107.85059 1.8547368,109.50059 0.03957684,112.44801 0.00712684,111.76886 0.00345684,70.750591 z m -0.003999998,-56.75 0,-13.99999960019 20.000000158,0 20,0 0,13.99999960019 0,14 -20,0 -20.000000158,0 0,-14 z").attr({fill: "#000"}),
 	paper.rect(-5, 48, 49, 3).attr({stroke: "none", fill: "#fff"})
-//	paper.rect(0, 0, 32, 5).attr({stroke: "none", fill: "#000"})
 );
-mouton.transform("t196,-20s0.22...");
-
-
-
+mouton.transform("t196,-25s0.22...");
 
 
 var condamne = paper.print(229, 160, "o", URW, 64);
 condamne[0].animate({transform: "...r90"}, 500, function () {})
 
-// var aumonier = paper.image('/img/t.jpg', 292, 70, 22, 50);
 var aumonier = paper.print(272, 160, "t", URW, 64);
 
-//var logo_title = paper.print(237, 150, "cutting edge technology", URW, 13);
-var logo_title = paper.print(237, 150, "technologie de pointe", URW, 13);
+var logo_title = paper.print(237, 150, "cutting edge technology", URW, 13);
+//var logo_title = paper.print(237, 150, "technologie de pointe", URW, 13);
 
 
-paper.print(28, 160, "la gui      ine", URW, 64);
+var gui = paper.print(28, 160, "la gui", URW, 64);
+var ine = paper.print(300, 160, "ine", URW, 64);
 
 
 
 var done=false;
 function bourreau(){
 	if (done) {
-		mouton.transform("...t0,-430")
+		mouton.transform("...t0,-445")
 		condamne.transform("...t-350,0")
 		done = false;
 
 	} else {
-		mouton.animate({transform: "...t0,430",easing: "<"}, 200, function () {decapite()})
+		mouton.animate({transform: "...t0,445",easing: "<"}, 200, function () {decapite()})
 		done=true;
 	}
 }
@@ -86,7 +82,7 @@ function ready(){
 <button onclick="bourreau()">DECAPITER</button>
 
 
-
+<div id="holder"></div>
 
 
 
