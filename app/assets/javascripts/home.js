@@ -19,6 +19,7 @@ var Guillotine = {
 	montant:null,
 	mouton:null,
 	condamne:null,
+	corps:null,
 	tete:null,
 	aumonier:null,
 	titleStart:null,
@@ -54,20 +55,20 @@ var Guillotine = {
 			this.paper.rect(3, 0, 26, 5).attr({stroke: "none", fill: "#000"}),
 			this.paper.rect(15, 5, 1, 135).attr({stroke: "none", fill: "#999"})
 		);
-		Guillotine.montant.transform("t200,5...");
 
 		Guillotine.mouton = Guillotine.paper.set(
-			Guillotine.paper.rect(3, 0, 2, 130).attr({stroke: "none", fill: "#fff"}),
-			Guillotine.paper.path("M0 0L0 24L10 10L10 0").attr({fill: "#000"}),
-			Guillotine.paper.rect(-1, 6, 12, 1).attr({stroke: "none", fill: "#fff"})
+			Guillotine.paper.rect(14, 14, 3, 130).attr({stroke: "none", fill: "#fff"}),
+			Guillotine.paper.path("M11 13L11 37L21 23L21 13").attr({fill: "#000"}),
+			Guillotine.paper.rect(10, 18, 12, 1).attr({stroke: "none", fill: "#fff"})
 		);
-		Guillotine.mouton.transform("t211,18");
+
 
 		Guillotine.guillotine = this.paper.set(
 			Guillotine.montant,
 			Guillotine.mouton
 		);
 
+		Guillotine.guillotine.transform("t200,5");
 
 		Guillotine.tete = this.paper.print(229, 160, "o", this.URW, 64);
 		//condamne[0].animate({transform: "...r90"}, 500, function () {})
@@ -85,21 +86,39 @@ var Guillotine = {
 
 
 	customize:function(condamne,subtitle){
+		
+		if (Guillotine.titleStart)
+		{
+			Guillotine.titleStart.remove()
+			Guillotine.titleStart = null;
+			Guillotine.titleEnd.remove()
+			Guillotine.aumonier.remove()
+			Guillotine.tete.remove()
+			Guillotine.subtitle.remove()
+		}
+		if (Guillotine.comdamne){
+			Guillotine.comdamne.remove();
+			Guillotine.subtitle.remove()
+		}
 
-		Guillotine.titleStart.remove()
-		Guillotine.titleEnd.remove()
-		Guillotine.aumonier.remove()
-		Guillotine.tete.remove()
-		Guillotine.subtitle.remove()
 
 		Guillotine.subtitle = this.paper.print(0, 150, $("guillotineTitle").value, this.URW, 13);
 
-		Guillotine.corps = Guillotine.paper.print(0, 160, $("candidateName").value, Guillotine.URW, 64,"middle",0.5)
+		Guillotine.corps = Guillotine.paper.print(0, 160, $("candidateName").value, Guillotine.URW, 64,"middle",0.55)
 
 		var condamne = Guillotine.paper.set(
 		Guillotine.corps
 		);
 		Guillotine.tete = Guillotine.corps[Guillotine.corps.length-1]
+
+
+
+		var bodySize = Guillotine.corps.getBBox(true).width - Guillotine.tete.getBBox(true).width
+
+
+
+
+		Guillotine.guillotine.transform("...t"+bodySize+",00")
 
 
 	}
