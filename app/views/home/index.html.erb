@@ -6,24 +6,21 @@
 
 
 
-  var width = 0;
-  if( typeof( window.innerWidth ) == 'number' ) {
-    width = window.innerWidth;
-  } else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) {
-    width = document.documentElement.clientWidth;
-  }
-
-
-
-
-
 </script>
 
 <button onclick="bourreau()">DECAPITER</button>
 
 
+<div id="newCandidate">
+	<div id="candidateFields">
+		<input type="text" id="candidateName" class="inputText" placeholder="Nom du nouveau candidat" value='sarkozy'></input>
+		<input type="text" id="guillotineTitle" class="inputText" placeholder="Sous titre" value="n'oubliez pas d'aller voter"></input>
+	</div> 
 
-
+	<div id="addCandidate">
+		<input id="addCandidateButton" class="submit" type="submit" value="Ajouter un candidat">
+	</div> 
+</div> 
 
 
 

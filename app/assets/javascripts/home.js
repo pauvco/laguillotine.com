@@ -2,14 +2,27 @@ var done=false;
 
 window.onload = function(){
 	Guillotine.start();
+
+
+
+	if ($("addCandidateButton")) {
+		$("addCandidateButton").addEvent('click',function(){Guillotine.customize()});
+		$("candidateName").addEvent('blur',function(e){checkNewCandidateFied(e)});
+		$("guillotineTitle").addEvent('blur',function(e){checkNewCandidateFied(e)});
+	}
+
+
 }
 
 var Guillotine = {
 	guillotine:null,
+	montant:null,
 	mouton:null,
 	condamne:null,
 	tete:null,
 	aumonier:null,
+	titleStart:null,
+	titleEnd:null,
 	subtitle:null,
 	storedHash:"",
 	paper:null,
@@ -26,29 +39,34 @@ var Guillotine = {
 		window.setInterval(function () {
 		    if (window.location.hash != Guillotine.storedHash) {
 			Guillotine.storedHash = window.location.hash;
-			Guillotine.hashChanged(PelletStudio.storedHash);
+			Guillotine.hashChanged(Guillotine.storedHash);
 		    }
 		}, 250);
 	},
 	initGuillotine:function(){
 		// Creates canvas 450 × 156 at 10, 50
-		this.paper = Raphael('guillotineHolder', 450, 256);
+		this.paper = Raphael('guillotineHolder', 750, 256);
 		this.URW = this.paper.getFont("URWGothicL-Book")
 
-		Guillotine.guillotine = this.paper.set(
+		Guillotine.montant = this.paper.set(
 			this.paper.rect(5, 5, 5, 135).attr({stroke: "none", fill: "#000"}),
 			this.paper.rect(22, 5, 5, 135).attr({stroke: "none", fill: "#000"}),
 			this.paper.rect(3, 0, 26, 5).attr({stroke: "none", fill: "#000"}),
 			this.paper.rect(15, 5, 1, 135).attr({stroke: "none", fill: "#999"})
 		);
-		Guillotine.guillotine.transform("t200,5...");
+		Guillotine.montant.transform("t200,5...");
 
-		Guillotine.mouton = this.paper.set(
-			this.paper.rect(16, -135, 7, 500).attr({stroke: "none", fill: "#fff"}),
-			this.paper.path("m 0.00371684,70.750591 -0.003999998,-41.75 20.000000158,0 20,0 0,9.46085 0,9.46086 -18.14872,29.28914 C 11.869207,93.320471 2.8708868,107.85059 1.8547368,109.50059 0.03957684,112.44801 0.00712684,111.76886 0.00345684,70.750591 z m -0.003999998,-56.75 0,-13.99999960019 20.000000158,0 20,0 0,13.99999960019 0,14 -20,0 -20.000000158,0 0,-14 z").attr({fill: "#000"}),
-			this.paper.rect(-5, 48, 49, 3).attr({stroke: "none", fill: "#fff"})
+		Guillotine.mouton = Guillotine.paper.set(
+			Guillotine.paper.rect(3, 0, 2, 130).attr({stroke: "none", fill: "#fff"}),
+			Guillotine.paper.path("M0 0L0 24L10 10L10 0").attr({fill: "#000"}),
+			Guillotine.paper.rect(-1, 6, 12, 1).attr({stroke: "none", fill: "#fff"})
 		);
-		Guillotine.mouton.transform("t196,-25s0.22...");
+		Guillotine.mouton.transform("t211,18");
+
+		Guillotine.guillotine = this.paper.set(
+			Guillotine.montant,
+			Guillotine.mouton
+		);
 
 
 		Guillotine.tete = this.paper.print(229, 160, "o", this.URW, 64);
@@ -60,8 +78,30 @@ var Guillotine = {
 	//	Guillotine.subtitle = paper.print(237, 150, "technologie de pointe", this.URW, 13);
 
 
-		var gui = this.paper.print(28, 160, "la gui", this.URW, 64);
-		var ine = this.paper.print(300, 160, "ine", this.URW, 64);
+		Guillotine.titleStart = this.paper.print(28, 160, "la gui", this.URW, 64);
+		Guillotine.titleEnd = this.paper.print(300, 160, "ine", this.URW, 64);
+	},
+
+
+
+	customize:function(condamne,subtitle){
+
+		Guillotine.titleStart.remove()
+		Guillotine.titleEnd.remove()
+		Guillotine.aumonier.remove()
+		Guillotine.tete.remove()
+		Guillotine.subtitle.remove()
+
+		Guillotine.subtitle = this.paper.print(0, 150, $("guillotineTitle").value, this.URW, 13);
+
+		Guillotine.corps = Guillotine.paper.print(0, 160, $("candidateName").value, Guillotine.URW, 64,"middle",0.5)
+
+		var condamne = Guillotine.paper.set(
+		Guillotine.corps
+		);
+		Guillotine.tete = Guillotine.corps[Guillotine.corps.length-1]
+
+
 	}
 }
 
@@ -74,12 +114,12 @@ var Guillotine = {
 
 	function bourreau(){
 		if (done) {
-			Guillotine.mouton.transform("...t0,-445")
+			Guillotine.mouton.transform("...t0,-100")
 			Guillotine.tete.transform("...t0,-350")
 			done = false;
 
 		} else {
-			Guillotine.mouton.animate({transform: "...t0,445",easing: "<"}, 200, function () {decapite()})
+			Guillotine.mouton.animate({transform: "...t0,100",easing: "<"}, 200, function () {decapite()})
 			done=true;
 		}
 	}
@@ -91,7 +131,7 @@ var Guillotine = {
 	//	condamne.animate({y: 105, easing: "bounce", callback: ready()}, 500);
 
 
-	Guillotine.tete[0].animate({transform: "...t0,350",easing: "bounce"}, 500, function () {})
+		Guillotine.tete.animate({transform: "...t0,350",easing: "bounce"}, 500, function () {})
 
 
 
@@ -100,3 +140,19 @@ var Guillotine = {
 	function ready(){
 
 	}
+
+
+
+function checkNewCandidateFied(event){
+	if (event.target.value.length>0)
+	switch (event.target.id){
+		case "candidateName":
+		case "guillotineTitle":
+
+	/// Check if name exists
+			
+			event.target.set('class', 'inputText-valid');
+
+			break;
+	}
+}
