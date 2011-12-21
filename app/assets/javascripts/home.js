@@ -6,7 +6,7 @@ window.onload = function(){
 
 
 	if ($("addCandidateButton")) {
-		$("addCandidateButton").addEvent('click',function(){Guillotine.customize()});
+		$("addCandidateButton").addEvent('click',function(){Guillotine.nouvelleDecapitation()});
 		$("candidateName").addEvent('blur',function(e){checkNewCandidateFied(e)});
 		$("guillotineTitle").addEvent('blur',function(e){checkNewCandidateFied(e)});
 	}
@@ -43,6 +43,27 @@ var Guillotine = {
 			Guillotine.hashChanged(Guillotine.storedHash);
 		    }
 		}, 250);
+	},
+	hashChanged:function(newHash){
+		newHash = newHash.substring(1,newHash.length);
+		var temp_hashTable = newHash.split('&');
+		var hashTable = [];
+		for (var i = 0; i < temp_hashTable.length; i++) {
+			var value = temp_hashTable[i].split('=');
+			if (value.length==2) 
+			{
+				hashTable[value[0]]=value[1];
+			}
+		}
+		if (hashTable['action']) {
+			switch (hashTable['action']){
+				case "decapite":
+					Guillotine.customize(hashTable['nom'],hashTable['titre']);
+					break;
+				default:
+					break;
+			}
+		}
 	},
 	initGuillotine:function(){
 		// Creates canvas 450 × 156 at 10, 50
@@ -83,7 +104,9 @@ var Guillotine = {
 		Guillotine.titleEnd = this.paper.print(300, 160, "ine", this.URW, 64);
 	},
 
-
+	nouvelleDecapitation:function(){
+		Guillotine.customize($("guillotineTitle").value,$("candidateName").value)
+	},
 
 	customize:function(condamne,subtitle){
 		
@@ -102,9 +125,9 @@ var Guillotine = {
 		}
 
 
-		Guillotine.subtitle = this.paper.print(0, 150, $("guillotineTitle").value, this.URW, 13);
+		Guillotine.subtitle = this.paper.print(0, 150, subtitle, this.URW, 13);
 
-		Guillotine.corps = Guillotine.paper.print(0, 160, $("candidateName").value, Guillotine.URW, 64,"middle",0.55)
+		Guillotine.corps = Guillotine.paper.print(0, 160,condamne , Guillotine.URW, 64,"middle",0.55)
 
 		var condamne = Guillotine.paper.set(
 		Guillotine.corps
@@ -113,12 +136,8 @@ var Guillotine = {
 
 
 
-		var bodySize = Guillotine.corps.getBBox(true).width - Guillotine.tete.getBBox(true).width
 
-
-
-
-		Guillotine.guillotine.transform("...t"+bodySize+",00")
+Guillotine.guillotine.transform("t"+(Guillotine.tete.getBBox(false).x-26)+",00")
 
 
 	}
