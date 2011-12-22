@@ -105,7 +105,7 @@ var Guillotine = {
 	},
 
 	nouvelleDecapitation:function(){
-		Guillotine.customize($("guillotineTitle").value,$("candidateName").value)
+		Guillotine.customize($("candidateName").value,$("guillotineTitle").value)
 	},
 
 	customize:function(condamne,subtitle){
@@ -119,8 +119,8 @@ var Guillotine = {
 			Guillotine.tete.remove()
 			Guillotine.subtitle.remove()
 		}
-		if (Guillotine.comdamne){
-			Guillotine.comdamne.remove();
+		if (Guillotine.condamne){
+			Guillotine.condamne.remove();
 			Guillotine.subtitle.remove()
 		}
 
@@ -129,7 +129,7 @@ var Guillotine = {
 
 		Guillotine.corps = Guillotine.paper.print(0, 160,condamne , Guillotine.URW, 64,"middle",0.55)
 
-		var condamne = Guillotine.paper.set(
+		Guillotine.condamne = Guillotine.paper.set(
 		Guillotine.corps
 		);
 		Guillotine.tete = Guillotine.corps[Guillotine.corps.length-1]
