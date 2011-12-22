@@ -31,11 +31,12 @@ var Guillotine = {
 	start:function(){
 		this.initGuillotine();
 
-		if (window.location.hash.length==0 && $('hash')) {
-			Guillotine.storedHash=$('hash').className;
-			window.location.hash=PelletStudio.storedHash;			
+		if (window.location.hash.length==0) {
+//			Guillotine.storedHash=$('hash').className;
+//			window.location.hash=Guillotine.storedHash;			
 		} else {
 			Guillotine.storedHash = window.location.hash;
+			Guillotine.hashChanged(Guillotine.storedHash);
 		}
 		window.setInterval(function () {
 		    if (window.location.hash != Guillotine.storedHash) {
