@@ -105,7 +105,7 @@ var Guillotine = {
 	},
 
 	nouvelleDecapitation:function(){
-		Guillotine.customize($("candidateName").value,$("guillotineTitle").value)
+		document.location='/#action=decapite&nom='+$("candidateName").value+'&titre='+$("guillotineTitle").value;
 	},
 
 	customize:function(condamne,subtitle){
