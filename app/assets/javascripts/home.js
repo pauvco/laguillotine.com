@@ -110,6 +110,8 @@ var Guillotine = {
 	},
 
 	customize:function(condamne,subtitle){
+
+		done=false;
 		
 		if (Guillotine.titleStart)
 		{
